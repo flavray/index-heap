@@ -26,6 +26,10 @@ impl <T: Ord + Copy + Hash> IndexHeap<T> {
         }
     }
 
+    pub fn contains_index(&self, index: usize) -> bool {
+        self.indices.contains_key(&index)
+    }
+
     pub fn push(&mut self, index: usize, item: T) {
         let size = self.size;
 
@@ -202,6 +206,18 @@ mod test {
             Some(&x) => assert_eq!(0, x),
             None => assert!(false)
         }
+    }
+
+    #[test]
+    fn contains() {
+        let mut heap = IndexHeap::new();
+
+        heap.push(0, 10);
+        heap.push(1, 42);
+        heap.push(2, 35);
+
+        assert!(heap.contains_index(0));
+        assert!(!heap.contains_index(5));
     }
 
     #[test]
