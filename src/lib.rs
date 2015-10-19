@@ -18,6 +18,10 @@ impl <T: Ord + Copy + Hash> IndexHeap<T> {
         self.size == 0
     }
 
+    pub fn size(&self) -> usize {
+        self.size
+    }
+
     pub fn top(&self) -> Option<&T> {
         if self.empty() {
             None
@@ -206,6 +210,27 @@ mod test {
             Some(&x) => assert_eq!(0, x),
             None => assert!(false)
         }
+    }
+
+    #[test]
+    fn size() {
+        let mut heap = IndexHeap::new();
+
+        heap.push(0, 10);
+        heap.push(1, 42);
+        heap.push(2, 35);
+
+        assert_eq!(3, heap.size());
+
+        heap.pop();
+
+        assert_eq!(2, heap.size());
+
+        heap.pop();
+        heap.pop();
+        heap.pop();
+
+        assert_eq!(0, heap.size());
     }
 
     #[test]
