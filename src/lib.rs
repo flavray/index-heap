@@ -68,7 +68,6 @@ impl <T: Ord + Copy + Hash> IndexHeap<T> {
             },
             None => self.push(index, item)  // index not present, insert item at given index
         }
-        self.push(index, item)
     }
 
 }
