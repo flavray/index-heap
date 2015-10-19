@@ -34,6 +34,8 @@ impl <T: Ord + Copy + Hash> IndexHeap<T> {
         self.indices.contains_key(&index)
     }
 
+    pub fn into_vec(self) -> Vec<T> { self.elements }
+
     pub fn push(&mut self, index: usize, item: T) {
         let size = self.size;
 
@@ -231,6 +233,20 @@ mod test {
         heap.pop();
 
         assert_eq!(0, heap.size());
+    }
+
+    #[test]
+    fn into_vec() {
+        let mut heap = IndexHeap::new();
+
+        heap.push(0, 10);
+        heap.push(1, 42);
+        heap.push(2, 35);
+
+        let mut v = heap.into_vec();
+        v.sort();
+
+        assert_eq!(vec![10, 35, 42], v);
     }
 
     #[test]
