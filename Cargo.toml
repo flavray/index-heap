@@ -1,0 +1,4 @@
+[package]
+name = "index-heap"
+version = "0.1.0"
+authors = ["Flavien Raynaud <flavien.raynaud@gmail.com>"]
