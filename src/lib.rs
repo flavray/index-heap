@@ -2,6 +2,7 @@ use std::cmp::Ord;
 use std::collections::HashMap;
 use std::hash::Hash;
 
+#[derive(Clone)]
 pub struct IndexHeap<T> {
     elements: Vec<T>,
     indices: HashMap<usize, usize>,
