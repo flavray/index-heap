@@ -1,5 +1,4 @@
 use std::collections::HashMap;
-use std::hash::Hash;
 
 #[derive(Clone)]
 pub struct IndexHeap<T> {
@@ -9,7 +8,7 @@ pub struct IndexHeap<T> {
     size: usize
 }
 
-impl <T: PartialOrd + Copy + Hash> IndexHeap<T> {
+impl <T: PartialOrd + Copy> IndexHeap<T> {
     pub fn new() -> IndexHeap<T> {
         IndexHeap{ elements: Vec::new(), indices: HashMap::new(), reverse: Vec::new(), size: 0 }
     }
@@ -86,7 +85,7 @@ impl <T: PartialOrd + Copy + Hash> IndexHeap<T> {
 
 }
 
-impl <T: PartialOrd + Copy + Hash> IndexHeap<T> {
+impl <T: PartialOrd + Copy> IndexHeap<T> {
     fn bubble_up(&mut self, mut index: usize) {
         loop {
             if index == 0 { break; }
@@ -157,7 +156,6 @@ mod test {
 
     use std::cmp::Ordering;
     use std::usize;
-    use std::hash::{Hash, Hasher};
 
     #[test]
     fn small() {
@@ -282,37 +280,20 @@ mod test {
 
     #[test]
     fn partial_ord() {
-        #[derive(Copy, Clone, PartialEq)]
-        struct Float {
-            value: f64
-        }
-
-        impl Hash for Float {
-            fn hash<H: Hasher>(&self, state: &mut H) {
-                state.write(&self.value.to_string().into_bytes());
-            }
-        }
-
-        impl PartialOrd for Float {
-            fn partial_cmp(&self, other: &Float) -> Option<Ordering> {
-                self.value.partial_cmp(&other.value)
-            }
-        }
-
         let mut heap = IndexHeap::new();
 
-        heap.push_without_index(Float{ value: 42.0 });
-        heap.push_without_index(Float{ value: 3.14 });
-        heap.push_without_index(Float{ value: 2.71 });
+        heap.push_without_index(42.0);
+        heap.push_without_index(3.14);
+        heap.push_without_index(2.71);
 
-        assert_eq!(2.71, heap.pop().unwrap().value);
-        assert_eq!(3.14, heap.pop().unwrap().value);
-        assert_eq!(42.0, heap.pop().unwrap().value);
+        assert_eq!(2.71, heap.pop().unwrap());
+        assert_eq!(3.14, heap.pop().unwrap());
+        assert_eq!(42.0, heap.pop().unwrap());
     }
 
     #[test]
     fn dijkstra() {
-        #[derive(Copy, Clone, Eq, PartialEq, Hash)]
+        #[derive(Copy, Clone, Eq, PartialEq)]
         struct State {
             cost: usize,
             position: usize,
