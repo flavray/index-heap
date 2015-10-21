@@ -8,7 +8,7 @@ pub struct IndexHeap<T> {
     size: usize
 }
 
-impl <T: PartialOrd + Copy> IndexHeap<T> {
+impl <T: PartialOrd> IndexHeap<T> {
     pub fn new() -> IndexHeap<T> {
         IndexHeap{ elements: Vec::new(), indices: HashMap::new(), reverse: Vec::new(), size: 0 }
     }
@@ -85,7 +85,7 @@ impl <T: PartialOrd + Copy> IndexHeap<T> {
 
 }
 
-impl <T: PartialOrd + Copy> IndexHeap<T> {
+impl <T: PartialOrd> IndexHeap<T> {
     fn bubble_up(&mut self, mut index: usize) {
         loop {
             if index == 0 { break; }
